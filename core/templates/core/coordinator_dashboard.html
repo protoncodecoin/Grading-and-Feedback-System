@@ -1,0 +1,90 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coordinator Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/coordinator.css' %}">
+    <link rel="shortcut icon" type="image/png" href="{% static 'assets/favicon.png' %}" >
+</head>
+<body>
+    <header>
+        <h1>Coordinator Dashboard</h1>
+        
+        <div class="user-info">
+            <p>{{ request.user.get_full_name }}</p>
+            <form method="post">
+                <input type="submit" value="logout" class="logout" />
+            </form>
+        </div>
+    </header>
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert {{ message.tags }}">
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';" >&times;</span>
+                   <p> {{ message }}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
+    <main>
+        <section class="widget">
+            <h2>Supervisors</h2>
+            <ul id="supervisor-list">
+                {% for sup in supervisors %}
+                <!-- List of supervisors will be dynamically loaded here -->
+                <li> {{ sup.get_full_name }}</li>
+                {% endfor %}
+                <!-- Add more supervisors as needed -->
+            </ul>
+        </section>
+
+        <section class="widget">
+            <h2>Students</h2>
+            <ul id="student-list">
+                {% for student in students %}
+                <!-- List of students will be dynamically loaded here -->
+                <li>{{ student.get_full_name }}</li>
+                <!-- Add more students as needed -->
+                 {% endfor %}
+            </ul>
+        </section>
+
+        <section class="widget">
+            <h2>Assign Supervisors to Students</h2>
+            <form id="assignment-form" method="post">
+                {% csrf_token %}
+                <label for="student">Select Student:</label>
+                <select id="student" name="student">
+                    <!-- Options for students -->
+                    {% comment %} <option value="student1">Student 1</option>
+                    <option value="student2">Student 2</option> {% endcomment %}
+                    <!-- Add more students as needed -->
+                </select>
+
+                <label for="supervisor">Select Supervisor:</label>
+                <select id="supervisor" name="supervisor">
+                    <!-- Options for supervisors -->
+                    {% comment %} <option value="supervisor1">Supervisor 1</option>
+                    <option value="supervisor2">Supervisor 2</option> {% endcomment %}
+                    <!-- Add more supervisors as needed -->
+                </select>
+
+                <button type="submit" id="assign-btn">Assign</button>
+            </form>
+        </section>
+
+        <section class="widget">
+            <h2>Grading Statistics</h2>
+            <ul id="grading-stats">
+                <!-- Statistics on student grades will be dynamically loaded here -->
+                <li>A+: 5 students</li>
+                <li>A: 10 students</li>
+                <li>B: 8 students</li>
+                <!-- Add more statistics as needed -->
+            </ul>
+        </section>
+    </main>
+</body>
+<script src="{% static 'js/assign.js'%}"></script>
+</html>

@@ -1,0 +1,149 @@
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to left, #69a78a, #00c6ff);
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #343a40;
+    color: #ffffff;
+    padding: 20px;
+    /* text-align: center; */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+    padding-right: 10px;
+}
+
+.logout {
+     padding: 10px 20px;
+    background-color: #dd0700;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.4s;
+}
+
+.logout:hover {
+    background-color: #7a0804;
+}
+
+h1 {
+    margin: 0;
+}
+
+main {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin: 20px;
+}
+
+.widget {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin: 10px;
+    flex: 1;
+    min-width: 300px;
+    text-align: center;
+}
+
+h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+label {
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+input[type="file"] {
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+p {
+    margin: 10px 0;
+    font-size: 18px;
+}
+
+#project-type, #project-title {
+    margin-bottom: 1rem;
+}
+
+
+
+/* ALERT */
+.error {
+  background-color: rgba(255, 0, 0, 0.881);
+  backdrop-filter: blur(10px);
+  color: white;
+}
+
+.success {
+  background-color: rgba(0, 128, 0, 0.911);
+  backdrop-filter: blur(10px);
+  color: white;
+}
+
+.alert {
+  padding: 15px;
+  width: 50%;
+  margin: 0 auto;
+text-align:center;
+}
+
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.closebtn:hover {
+  color: black;
+}
+
+
+
+
+

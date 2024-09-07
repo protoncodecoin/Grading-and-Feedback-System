@@ -1,0 +1,128 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lecturer Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/lecturer.css' %}">
+    <link rel="shortcut icon" type="image/png" href="{% static 'assets/favicon.png' %}" >
+</head>
+<body>
+    <header>
+        <h1>Lecturer Dashboard</h1>
+
+        <div class="user-info">
+            <p>{{ request.user.email }}</p>
+            <form method="post">
+                <input type="submit" value="logout" class="logout" />
+            </form>
+        </div>
+    </header>
+             {% if messages %}
+                {% for message in messages %}
+                    <div class="alert {{ message.tags }}">
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';" >&times;</span>
+                      <p> {{ message }}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
+    <main>
+        <section class="widget">
+            <h2>Assigned Students</h2>
+            <ul id="assigned-students-list">
+                    {% if students %}
+                        {% for student in students %}
+                            <li>{{ student.student.get_full_name }}</li>
+                        {% endfor %}
+                    {% endif %}
+            </ul>
+        </section>
+
+        <section class="widget">
+            <h2>Coordinator Information</h2>
+            <div id="coordinator-info">
+                <p>Name: {{ request.user.get_full_name }}</p>
+                <p>Email: {{ request.user.email }}</p>
+            </div>
+        </section>
+
+        <section class="widget">
+            <h2>Submitted Projects</h2>
+            <ul id="submitted-projects-list">
+                {% if works %}
+                    {% for work in works %}
+                <li>
+                    <span>{{ work.student.get_full_name}} | {{ work.project_title }}</span>
+                    <a href="{{work.file.url }}" download="{{work.project_title }}">Download</a>
+                </li>
+                    {% endfor %}
+                {% else %}
+                    <p>No work submitted </p>
+                {% endif %}
+            </ul>
+        </section>
+
+        <section class="widget">
+            <h2>Provide Feedback and Grade</h2>
+            <form id="feedback-form" method="post">
+                {% csrf_token %}
+
+                {{ form.as_p }}
+                {% comment %} <label for="student">Select Student:</label>
+                <select id="student" name="student">
+                    {% if students %}
+                        {% for student in students %}
+                            <option value="{{ student.student.id }}">{{ student.student.get_full_name }}</option>
+                        {% endfor %}
+                    {% endif %}
+                </select>
+
+                <label for="grade">Grade:</label>
+                <select id="grade" name="grade">
+                    <option value="A+">A+</option>
+                    <option value="A">A</option>
+                    <option value="B+">B+</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                </select>
+
+                <label for="feedback">Feedback:</label>
+                <textarea id="feedback" name="feedback" placeholder="Enter feedback here..."></textarea> {% endcomment %}
+
+                <button type="submit">Submit Feedback</button>
+            </form>
+        </section>
+    </main>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,130 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/student.css' %}">
+    <link rel="shortcut icon" type="image/png" href="{% static 'assets/favicon.png' %}" >
+</head>
+<body>
+    <header>
+        <h1>Student Dashboard</h1>
+
+        <div class="user-info">
+            <p>{{ request.user.get_full_name }}</p>
+            <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <input type="submit" value="logout" class="logout" />
+            </form>
+        </div>
+    </header>
+             {% if messages %}
+                {% for message in messages %}
+                    <div class="alert {{ message.tags }}">
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';" >&times;</span>
+                     <p> {{ message }}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
+    <main>
+        <section class="widget">
+            <h2>Upload Project</h2>
+            <form id="upload-form" enctype="multipart/form-data" method="post">
+                {% csrf_token %}
+
+                {{ form.as_p }}
+
+                {% comment %} <label for="project-title">Project Type:</label>
+                <select name='project-type' id="project-type">
+                    <option value="final year project">Final Year Project</option>
+                    <option value="third year project">Third Year project</option>
+                </select>
+
+                <label for="project-title">Project Title:</label>
+                
+                <input type="text" id="project-title" name="project-title" placeholder="Enter your project title" required>
+                
+                <label for="project-file">Choose PDF File:</label>
+                <input type="file" id="project-file" name="project-file" accept=".pdf" required> {% endcomment %}
+
+                <button type="submit">Submit</button>
+            </form>
+        </section>
+
+        <section class="widget">
+            <h2>Supervisor Details</h2>
+            {% if supervisor_info %}
+                {% for sup in supervisor_info %} 
+                <div id="supervisor-info">
+                    <p>Supervisor Name: {{ sup.supervisor.get_full_name }}</p>
+                    <p>Supervisor Email: {{ sup.supervisor.email }}</p>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p>No supervisor has being assigned yet!</p>
+
+            {% endif %}
+        </section>
+
+        
+            <section class="widget">
+                <h2>Grade</h2>
+                {% if feedbacks %}
+                    {% for feedback in feedbacks %}
+                        <div id="grade-info">
+                            <p>Grade: {{ feedback.grade }}</p>
+                        </div>
+                    {% endfor %}
+        
+                {% else %}
+                <p>No Grade Yet</p>
+                {% endif %}
+            </section>
+            
+
+        
+                <section class="widget">
+                    <h2>Feedback</h2>
+                    {% if feedbacks %}
+                        {% for feedback in feedbacks %}
+                            <div id="feedback-info">
+                                <p>Feedback: {{ feedback.message }}</p>
+                            </div>
+                        {% endfor %}
+
+                    {% else %}
+                            <p>No Feedback yet</p>
+                    {% endif %}
+                </section>
+            
+    </main>
+
+    {% comment %} <script>
+        document.getElementById('upload-form').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            
+            const formData = new FormData();
+            formData.append('project_title', document.getElementById('project-title').value);
+            formData.append('project_file', document.getElementById('project-file').files[0]);
+
+            try {
+                const response = await fetch('/submit-project', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    alert('Project submitted successfully!');
+                } else {
+                    alert('Failed to submit project. Try again.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred while submitting the project.');
+            }
+        });
+    </script> {% endcomment %}
+</body>
+</html>

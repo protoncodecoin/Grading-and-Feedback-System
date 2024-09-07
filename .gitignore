@@ -1,0 +1,5 @@
+.env/
+db.sqlite3
+/media
+/Projects
+__pycache__/

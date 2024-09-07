@@ -1,0 +1,72 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - Automated Grading and Feedback System</title>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}" />
+    <link rel="shortcut icon" type="image/png" href="{% static 'assets/favicon.png' %}" >
+  </head>
+  <body>
+    <div class="login-container">
+      <div class="login-box">
+        <h1 class="login-title">AUTOMATED GRADING AND FEEDBACK SYSTEM</h1>
+        <img src="{% static 'assets/logo.jpg' %}" alt="Logo" class="login-logo" />
+        <form method="POST">
+            {% csrf_token %}
+            
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert {{ message.tags }}">
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';" >&times;</span>
+                      <p> {{ message }}</p>
+                    </div>
+                {% endfor %}
+            {% endif %}
+            <div class="form-group">
+            <label for="identifier">User ID</label>
+            <input
+              type="text"
+              name="identifier"
+              id="identifier"
+              placeholder="Coordinator, Supervisor, or Student ID"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input
+              type="password"
+              name="password"
+              id="password"
+              placeholder="Password"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input
+              type="email"
+              name="email"
+              id="email"
+              placeholder="email@email.com"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="role">Role</label>
+            <select name="role" id="role" required>
+              <option value="coordinator">Coordinator</option>
+              <option value="supervisor">Supervisor</option>
+              <option value="student">Student</option>
+            </select>
+          </div>
+          <button type="submit" class="login-button">Login</button>
+          <div id="error"></div>
+          <!-- Removed inline style -->
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
