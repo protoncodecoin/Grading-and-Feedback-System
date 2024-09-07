@@ -6,6 +6,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
+from django.db.models import Count
 
 from core.models import FeedBack, SubmittedWork, Supervisor, CustomUser
 from .forms import FeedBackForm, SubmittedWorkForm
@@ -90,7 +91,7 @@ def student_dashboard(request):
 @login_required(login_url="login")
 def coordinator_dashboard(request):
 
-    if request.user == "coordinator":
+    if request.user.user_type == "coordinator":
 
         if request.method == "POST":
             student_id = request.POST.get("student")
@@ -107,7 +108,7 @@ def coordinator_dashboard(request):
 
             except Exception as e:
                 print(str(e))
-                # messages.error(request, str(e))
+                messages.error(request, str(e))
                 return redirect("coordinator_dashboard")
 
         students = get_user_model().objects.filter(
@@ -116,7 +117,19 @@ def coordinator_dashboard(request):
         supervisors = get_user_model().objects.filter(
             user_type=CustomUser.UserType.SUPERVISOR, is_active=True
         )
-        context = {"students": students, "supervisors": supervisors}
+
+        statistics = (
+            FeedBack.objects.values("grade")
+            .annotate(total=Count("grade"))
+            .order_by("-total")
+        )
+
+        context = {
+            "students": students,
+            "supervisors": supervisors,
+            "statistics": statistics,
+        }
+        print(statistics, "this is the stat")
         return render(request, "core/coordinator_dashboard.html", context)
 
     return HttpResponseForbidden("You are not allowed to view this resources")

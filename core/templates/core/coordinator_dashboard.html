@@ -77,11 +77,16 @@
         <section class="widget">
             <h2>Grading Statistics</h2>
             <ul id="grading-stats">
-                <!-- Statistics on student grades will be dynamically loaded here -->
-                <li>A+: 5 students</li>
-                <li>A: 10 students</li>
-                <li>B: 8 students</li>
-                <!-- Add more statistics as needed -->
+                {% if statistics %}
+                    {% for stat in statistics %}
+                    <!-- Statistics on student grades will be dynamically loaded here -->
+                    <li>{{stat.grade|capfirst }}: {{ stat.total }} students</li>
+                    {% comment %} <li>A: 10 students</li>
+                    <li>B: 8 students</li> {% endcomment %}
+
+                    {% endfor %}
+                    <!-- Add more statistics as needed -->
+                {% endif %}
             </ul>
         </section>
     </main>

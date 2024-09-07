@@ -74,7 +74,7 @@
                 {% if feedbacks %}
                     {% for feedback in feedbacks %}
                         <div id="grade-info">
-                            <p>Grade: {{ feedback.grade }}</p>
+                            <p>Grade: {{ feedback.grade|capfirst }}</p>
                         </div>
                     {% endfor %}
         

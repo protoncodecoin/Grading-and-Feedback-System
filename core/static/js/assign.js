@@ -19,6 +19,7 @@ document.addEventListener("DOMContentLoaded", async function(){
         // disable assign button
         document.querySelector("#assign-btn").disabled = true;
 
+
     }else {
         studentSelectEl.insertAdjacentHTML("afterbegin", optionsHtml)
     }
