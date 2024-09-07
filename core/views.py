@@ -129,7 +129,6 @@ def coordinator_dashboard(request):
             "supervisors": supervisors,
             "statistics": statistics,
         }
-        print(statistics, "this is the stat")
         return render(request, "core/coordinator_dashboard.html", context)
 
     return HttpResponseForbidden("You are not allowed to view this resources")
